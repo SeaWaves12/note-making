@@ -1,0 +1,15 @@
+.Header {
+    position:fixed;
+    top: 0;
+    left: 0;
+    height: 56px;
+    width: 100vw;
+    padding:16px 32px;
+    background-color: ivory;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid rgb(106, 137, 206); */
+    box-sizing: border-box;
+    box-shadow: 0 3px 3px rgb(145, 130, 130);
+}

@@ -1,0 +1,52 @@
+.CreateNote {
+    width: 500px;
+    margin: 100px auto 50px auto;
+    padding: 7px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 6px rgb(128, 128, 128);
+    border-radius: 6px;
+}
+
+.CreateNote input {
+    width: 100%;
+    border:  none;
+    padding: 3px 10px;
+    margin-bottom: 8px;
+    outline: none;
+    font-size: 1.2rem;
+    resize:none;
+    box-sizing: border-box;
+}
+
+.CreateNote textarea {
+    width: 100%;
+    border:  none;
+    margin-bottom: 0;
+    padding: 4px 10px;
+    outline: none;
+    font-size: 1.2rem;
+    resize:none;
+    box-sizing: border-box;
+}
+
+.CreateNote p {
+    margin-bottom: 0;
+    
+}
+
+.CreateNote button {
+    font-size: xx-large;
+    position: relative;
+    bottom: -7px;
+    left: 471px;
+    background: rgb(15, 12, 190);
+    color:lime;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 3px 3px rgb(165, 165, 165);
+    cursor:pointer;
+    outline: none;
+}
+

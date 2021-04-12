@@ -1,0 +1,58 @@
+.Note {
+    position: relative;
+    width: 250px;
+    height: auto;
+    min-height: 125px;
+    /* display:flex;
+    justify-content: space-around;
+    align-items: center; */
+    background-color: rgb(252, 252, 252);
+    border: 2px solid lightgreen;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px  #ccc;
+    padding:6px;
+    margin:16px 0 16px 40px;
+    float:left
+}
+.Note h2{
+    margin-top: 10px;
+}
+.Note small{
+    position: absolute;
+    bottom: 4px;
+    right:30px;
+    font-size: 0.6rem;
+
+}
+
+
+.Note button.Edit {
+    position: absolute;
+    bottom: -12px;
+    right:-12px;
+    background: rgb(119, 112, 9);
+    color:rgb(0, 255, 0);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 32px;
+    box-shadow: 0 3px 3px rgb(165, 165, 165);
+    cursor:pointer;
+    outline: none;
+}
+
+.Note button.Delete {
+    position: absolute;
+    top: -14px;
+    right:-14px;
+    background: rgb(255, 4, 4);
+    color:rgb(0, 255, 0);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 32px;
+    box-shadow: 0 3px 3px rgb(165, 165, 165);
+    cursor:pointer;
+    outline: none;
+}
+
