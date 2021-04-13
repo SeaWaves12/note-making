@@ -10,7 +10,7 @@ const header = (props) => {
             <div>
                 <SearchBar
                     value={props.value}
-                    onChange={(e) => props.searchChangeHandler(e)}
+                    onChange={(e) => props.onChangeSearchHandler(e)}
                     onRequestSearch={() => props.searchHandler()}
                     onCancelSearch={(e)=>props.cancelSearchHandler(e)}
                 />

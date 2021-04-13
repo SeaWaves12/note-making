@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from './components/Header/Header';
 import CreatNote from './components/Create-Note/Create-Note';
 import Note from './components/Note/Note';
+// import note from './components/Note/Note';
 
 class App extends Component {
   state = {
@@ -10,7 +11,7 @@ class App extends Component {
     note: {
       title: "Untitled...",
       content: '',
-      lastModified: Date.now(),
+      lastModified: '',
     },
     searchString: ''
   };
@@ -18,7 +19,9 @@ class App extends Component {
   addNoteHandler = (e, state) => {
     e.preventDefault();
     let updatednotes = this.state.notes
-    updatednotes.push(this.state.note)
+    const { note } = this.state;
+    note.lastModified = Date.now();
+    updatednotes.push(note)
     this.setState({ ...this.state, notes: updatednotes })
     this.setState({ ...this.state, note: { ...this.state.note, title: 'Untitled...', content: '' } })
   }
@@ -53,11 +56,33 @@ class App extends Component {
     this.setState({ ...this.state, note: { ...this.state.note, content: e.target.value } })
   }
 
-  searchChangeHandler = (e) => {
-    this.setState({ ...this.state, searchString: e})
+  onChangeSearchHandler = (e) => {
+    this.setState({ ...this.state, searchString: e })
   }
   cancelSearchHandler = () => {
     this.setState({ ...this.state, searchString: "" })
+  }
+  searchHandler = () => {
+    const updatedNotes = this.state.notes.filter(note => {
+      return (this.state.searchString.toLowerCase() === note.title.toLowerCase()) || (this.state.searchString.toLowerCase() === note.content.toLowerCase())
+    });
+    this.setState({ ...this.state, notes: updatedNotes });
+  }
+
+  newestSort = () => {
+    const { notes } = this.state;
+    notes.sort((a, b) => {
+      return new Date(b.lastModified) - new Date(a.lastModified);
+    })
+    this.setState({ notes })
+  }
+
+  oldestSort = () => {
+    const { notes } = this.state;
+    notes.sort((a, b) => {
+      return new Date(a.lastModified) - new Date(b.lastModified);
+    })
+    this.setState({ notes })
   }
 
   render() {
@@ -65,11 +90,11 @@ class App extends Component {
       <div>
         <Header
           value={this.state.searchString}
-          searchChangeHandler={this.searchChangeHandler}
+          onChangeSearchHandler={this.onChangeSearchHandler}
           cancelSearchHandler={this.cancelSearchHandler}
-          searchHandler={''}
-
+          searchHandler={this.searchHandler}
         />
+
         <CreatNote
           editModeHandler={this.editModeHandler}
           addNoteHandler={this.addNoteHandler}
@@ -77,6 +102,8 @@ class App extends Component {
           ContentChangeHandler={this.ContentChangeHandler}
           title={this.state.note.title}
           content={this.state.note.content}
+          newestSort={this.newestSort}
+          oldestSort={this.oldestSort}
         />
         {
           this.state.notes.map((note, i) => {
@@ -85,12 +112,11 @@ class App extends Component {
               id={i}
               title={note.title}
               content={note.content}
-              lastModified={new Date(note.lastModified).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+              lastModified={new Date(note.lastModified).toLocaleDateString("en", { hour: "2-digit", minute: "2-digit" })}
               editHandler={this.editHandler}
               deleteHandler={this.deleteHandler} />
           })
         }
-
       </div>
     );
   }

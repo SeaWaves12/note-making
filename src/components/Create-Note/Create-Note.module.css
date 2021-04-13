@@ -1,6 +1,15 @@
+.Filter {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Sort {
+    margin-right: 10px;
+}
 .CreateNote {
     width: 500px;
-    margin: 100px auto 50px auto;
+    margin: 20px auto 50px auto;
     padding: 7px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 1px 6px rgb(128, 128, 128);
