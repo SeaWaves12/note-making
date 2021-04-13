@@ -12,7 +12,7 @@ const header = (props) => {
                     value={props.value}
                     onChange={(e) => props.onChangeSearchHandler(e)}
                     onRequestSearch={() => props.searchHandler()}
-                    onCancelSearch={(e)=>props.cancelSearchHandler(e)}
+                    onCancelSearch={(e) => props.cancelSearchHandler(e)}
                 />
             </div>
         </div>
