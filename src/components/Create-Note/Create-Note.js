@@ -21,7 +21,7 @@ const createNote = (props) => {
                 </select>
                 <select defaultValue=""
                     onChange={(e) => {
-                    e.target.value==="week"? props.weekFilter() : e.target.value==='month' ? props.monthFilter() : props.year()
+                    e.target.value==="week"? props.weekFilter() : e.target.value==='month' ? props.monthFilter() : props.yearFilter()
                 }} >
                     <option value="" disabled hidden>Filter</option>
                     <option value="week">Week wise</option>

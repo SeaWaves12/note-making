@@ -64,7 +64,8 @@ class App extends Component {
   }
   searchHandler = () => {
     const updatedNotes = this.state.notes.filter(note => {
-      return (this.state.searchString.toLowerCase() === note.title.toLowerCase()) || (this.state.searchString.toLowerCase() === note.content.toLowerCase())
+      return note.title.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !== -1 ||
+        note.content.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !== -1
     });
     this.setState({ ...this.state, notes: updatedNotes });
   }
@@ -83,6 +84,14 @@ class App extends Component {
       return new Date(a.lastModified) - new Date(b.lastModified);
     })
     this.setState({ notes })
+  }
+
+  monthFilter = () => {
+    this.state.notes.map(note => {
+      console.log(new Date(note.lastModified).getMonth()+1)
+      return note;
+    })
+    
   }
 
   render() {
@@ -104,6 +113,9 @@ class App extends Component {
           content={this.state.note.content}
           newestSort={this.newestSort}
           oldestSort={this.oldestSort}
+          weekFilter={''}
+          monthFilter={this.monthFilter}
+          yearFilter={''}
         />
         {
           this.state.notes.map((note, i) => {
