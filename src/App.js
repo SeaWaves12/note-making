@@ -9,7 +9,8 @@ import classes from './App.module.css'
 
 class App extends Component {
 
-  // To check week filtering notes: [{
+  // To check week filtering -- > 
+  //   notes: [{
   //   title: "ppp",
   //   content: 'ppp',
   //   lastModified: new Date().getTime() - (20 * 24 * 60 * 60 * 1000),
@@ -17,6 +18,7 @@ class App extends Component {
 
   state = {
     notes: [],
+    duplicateNotes: [],
     note: {
       title: "Untitled...",
       content: '',
@@ -28,12 +30,13 @@ class App extends Component {
   addNoteHandler = (e) => {
     e.preventDefault();
     this.oldestSort();
-    let updatednotes = this.state.notes
+    let duplicateUpdatedNotes = this.state.duplicateNotes;
+    let updatednotes = this.state.notes;
     const { note } = this.state;
     note.lastModified = Date.now();
-    updatednotes.push(note)
-    this.setState({ ...this.state, notes: updatednotes })
-    this.setState({ ...this.state, note: { ...this.state.note, title: 'Untitled...', content: '' } })
+    updatednotes.push(note);
+    duplicateUpdatedNotes.push(note);
+    this.setState({ ...this.state, notes: updatednotes, duplicateNotes: duplicateUpdatedNotes, note: { ...this.state.note, title: 'Untitled...', content: '' }})
   }
 
   deleteHandler = (id) => {
@@ -67,10 +70,14 @@ class App extends Component {
   }
 
   onChangeSearchHandler = (e) => {
-    this.setState({ ...this.state, searchString: e })
+    this.setState({ ...this.state, searchString: e }, () => {
+      if (this.state.searchString === "") {
+        this.cancelSearchHandler();
+      }
+    })
   }
-  cancelSearchHandler = (prevState) => {
-    this.setState({ ...this.State, searchString: "" })
+  cancelSearchHandler = () => {
+    this.setState({ ...this.State, searchString: "", notes: this.state.duplicateNotes })
   }
   searchHandler = () => {
     const updatedNotes = this.state.notes.filter(note => {
