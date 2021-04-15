@@ -1,6 +1,6 @@
 .CreateNote {
     width: 500px;
-    margin: 20px auto 50px auto;
+    margin: 2px auto 50px auto;
     padding: 7px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 1px 6px rgb(128, 128, 128);
@@ -16,6 +16,13 @@
     font-size: 1.2rem;
     resize:none;
     box-sizing: border-box;
+}
+
+.Date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .CreateNote textarea {

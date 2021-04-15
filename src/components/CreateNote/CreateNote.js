@@ -1,10 +1,33 @@
 import React from 'react';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import classes from './CreateNote.module.css';
 
 const createNote = (props) => {
     return (
         <div>
+            <div className={classes.Date}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Select Date"
+                        format="MM/dd/yyyy"
+                        placeholder="MM/dd/yyyy"
+                        value={props.selectedDate}
+                        onChange={e => props.dateChangeHandler(e)}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
+            </div>
+
             <div className={classes.CreateNote}>
                 <form>
                     <input

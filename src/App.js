@@ -5,7 +5,7 @@ import CreatNote from './components/CreateNote/CreateNote';
 import Note from './components/Note/Note';
 import FilterDropdown from './components/FilterDropdown/FilterDropdown';
 import SortDropdown from './components/SortDropdown/SortDropdown';
-import classes from './App.module.css'
+import classes from './App.module.css';
 
 class App extends Component {
 
@@ -22,7 +22,7 @@ class App extends Component {
     note: {
       title: "Untitled...",
       content: '',
-      lastModified: '',
+      lastModified: new Date(Date.now()),
     },
     searchString: ''
   };
@@ -33,10 +33,9 @@ class App extends Component {
     let duplicateUpdatedNotes = this.state.duplicateNotes;
     let updatednotes = this.state.notes;
     const { note } = this.state;
-    note.lastModified = Date.now();
     updatednotes.push(note);
     duplicateUpdatedNotes.push(note);
-    this.setState({ ...this.state, notes: updatednotes, duplicateNotes: duplicateUpdatedNotes, note: { ...this.state.note, title: 'Untitled...', content: '' }})
+    this.setState({ ...this.state, notes: updatednotes, duplicateNotes: duplicateUpdatedNotes, note: { ...this.state.note, title: 'Untitled...', content: '', lastModified: new Date(Date.now()) } })
   }
 
   deleteHandler = (id) => {
@@ -62,10 +61,15 @@ class App extends Component {
     }, 700)
   }
 
+  dateChangeHandler = (e) => {
+    this.setState({ ...this.state, note: { ...this.state.note, lastModified: e } })
+  }
+
   titleChangeHandler = (e) => {
     this.setState({ ...this.state, note: { ...this.state.note, title: e.target.value } })
   }
-  ContentChangeHandler = (e) => {
+
+  contentChangeHandler = (e) => {
     this.setState({ ...this.state, note: { ...this.state.note, content: e.target.value } })
   }
 
@@ -76,9 +80,11 @@ class App extends Component {
       }
     })
   }
+
   cancelSearchHandler = () => {
     this.setState({ ...this.State, searchString: "", notes: this.state.duplicateNotes })
   }
+
   searchHandler = () => {
     const updatedNotes = this.state.notes.filter(note => {
       return note.title.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !== -1 ||
@@ -104,20 +110,21 @@ class App extends Component {
   }
 
   filterHanlder = (v) => {
-    if (!isNaN(Number(v))) {
-      const newNotes = this.state.notes.filter(note => {
-        return new Date(note.lastModified).getMonth() + 1 === Number(v) ||
-          new Date(note.lastModified).getYear() + 1900 === Number(v)
-      })
-      this.setState({ ...this.state, notes: newNotes });
-    }
-    else {
-      //var now = new Date();
-      let yesterday = new Date(new Date().getTime() - (0));
-      let last7Days = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));
-      const newNotes = this.state.notes.filter(note => new Date(note.lastModified) <= yesterday && new Date(note.lastModified) >= last7Days)
-      this.setState({ ...this.state, notes: newNotes });
-    }
+    this.setState({ ...this.state, notes: this.state.duplicateNotes }, () => {
+      if (!isNaN(Number(v))) {
+        const newNotes = this.state.notes.filter(note => {
+          return new Date(note.lastModified).getMonth() + 1 === Number(v) ||
+            new Date(note.lastModified).getYear() + 1900 === Number(v)
+        })
+        this.setState({ ...this.state, notes: newNotes });
+      }
+      else {
+        let yesterday = new Date(new Date().getTime());
+        let last7Days = new Date(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));
+        const newNotes = this.state.notes.filter(note => new Date(note.lastModified) <= yesterday && new Date(note.lastModified) >= last7Days)
+        this.setState({ ...this.state, notes: newNotes });
+      }
+    });
   }
 
   render() {
@@ -129,26 +136,23 @@ class App extends Component {
           cancelSearchHandler={this.cancelSearchHandler}
           searchHandler={this.searchHandler}
         />
-
         <div className={classes.Filter}>
           <SortDropdown className={classes.Sort}
             newestSort={this.newestSort}
             oldestSort={this.oldestSort}
           />
           <FilterDropdown
-            weekFilter={''}
-            monthFilter={this.monthFilter}
-            yearFilter={''}
             filterHanlder={this.filterHanlder}
           />
         </div>
         <CreatNote
-          editModeHandler={this.editModeHandler}
           addNoteHandler={this.addNoteHandler}
           titleChangeHandler={this.titleChangeHandler}
-          ContentChangeHandler={this.ContentChangeHandler}
+          ContentChangeHandler={this.contentChangeHandler}
+          dateChangeHandler={this.dateChangeHandler}
           title={this.state.note.title}
           content={this.state.note.content}
+          selectedDate={this.state.note.lastModified}
         />
         {
           this.state.notes.map((note, i) => {
@@ -166,5 +170,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
